@@ -1,0 +1,50 @@
+# RSS Processing System Dependencies
+
+# Core web framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+
+# HTTP requests
+requests==2.31.0
+aiohttp==3.9.0
+
+# RSS/XML parsing
+feedparser==6.0.10
+
+# ML/NLP libraries
+scikit-learn==1.3.2
+transformers==4.35.2
+spacy==3.7.2
+nltk==3.8.1
+
+# Text processing
+beautifulsoup4==4.12.2
+lxml==4.9.3
+
+# Database
+sqlalchemy==2.0.23
+# sqlite3 is built-in with Python
+
+# Scheduling
+apscheduler==3.10.4
+
+# Configuration
+python-dotenv==1.0.0
+pydantic==2.5.0
+pydantic-settings==2.1.0
+
+# Markdown processing for Obsidian
+markdown==3.5.1
+python-frontmatter==1.0.0
+
+# Logging
+loguru==0.7.2
+
+# Web scraping
+playwright==1.40.0
+
+# Development tools
+pytest==7.4.3
+black==23.11.0
+flake8==6.1.0
+mypy==1.7.1
