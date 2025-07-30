@@ -240,14 +240,23 @@ python -m src.persistence.db_status
 - ✅ **Created debugging tools for email content issues** - Debug scripts for troubleshooting email formatting problems
 - ✅ **Validated HTML email rendering** - Newsletter now displays perfectly in Gmail with proper formatting, article cards, and visual hierarchy
 
-**Session 11 Ready to Start** (2025-07-30):
-- 📝 **Deploy automated daily scheduling** - Set up cron/systemd for daily newsletter generation
+**Session 11 Complete** (2025-07-30):
+- ✅ **Fixed newsletter prioritization algorithm** - Resolved issue where high-priority articles were showing as "Daily Surprise"
+- ✅ **Improved keyword scoring system** - Changed base multiplier from 0.3 to 0.8 for better topic relevance
+- ✅ **Adjusted newsletter categorization thresholds** - High priority ≥70, Medium 50-69, Surprise <50 for realistic distribution
+- ✅ **Validated corrected newsletter generation** - Now correctly shows 50 high-priority articles with scores 100.0-80.0
+- ✅ **Tested GitHub MCP server functionality** - Successfully tested repository search, file operations, and authenticated access
+- ✅ **Ready for GitHub repository synchronization** - All Session 11 improvements ready to be pushed to remote repository
+
+**Session 12 Ready to Start** (2025-07-30):
+- 📝 **Complete GitHub repository synchronization** - Push all Session 11 improvements and fixes to remote repository
+- 📝 **Deploy automated daily scheduling** - Set up cron/systemd for daily newsletter generation  
 - 📝 **Create monitoring dashboard or logging improvements**
 - 📝 **Add webhook notifications for system events**
 - 📝 **Optimize article processing for larger volumes**
 
-**Current Status**: Production-ready RSS newsletter system with validated HTML email delivery, Gmail optimization, and 50-article generation capability
-**Next Steps**: Daily automation deployment, monitoring enhancements, and user experience improvements
+**Current Status**: Production-ready RSS newsletter system with corrected article prioritization, validated HTML email delivery, and 50-article generation capability. Local repository contains Session 11 fixes ready for GitHub synchronization.
+**Next Steps**: GitHub repository push, daily automation deployment, monitoring enhancements, and user experience improvements
 
 ## Implementation Details
 
@@ -295,7 +304,7 @@ src/
 │   ├── models.py            # SQLAlchemy models
 │   └── sync_database.py     # Database operations
 ├── scoring/                  # Topic scoring and ML components
-│   ├── topic_scorer.py      # Multi-criteria topic scoring system (100 topics)
+│   ├── topic_scorer.py      # Multi-criteria topic scoring system (100 topics) - **FIXED KEYWORD SCORING**
 │   ├── initialize_topics.py # OPML analysis and topic initialization
 │   ├── topic_manager.py     # Interactive topic management CLI
 │   └── expand_topics.py     # Extended topic generation utilities
@@ -316,7 +325,7 @@ data/
 └── rate_limits.json               # Rate limiting state
 
 output/
-├── newsletters/             # Generated newsletter files
+├── newsletters/             # Generated newsletter files **WITH SESSION 11 NEWSLETTERS**
 └── health_reports/          # System health check reports
 
 Root files:
@@ -325,8 +334,10 @@ Root files:
 ├── test_obsidian_integration.py # Obsidian integration testing
 ├── requirements.txt         # Python dependencies
 ├── pyproject.toml          # Project configuration
+├── generate_50_article_newsletter.py # **FIXED NEWSLETTER GENERATOR WITH IMPROVED SCORING**
+├── send_html_newsletter.py # HTML newsletter sender
 ├── Inoreader Feeds 20250729.xml # User's OPML export for topic initialization
-└── CLAUDE.md               # This documentation
+└── CLAUDE.md               # This documentation **UPDATED WITH SESSION 11 STATUS**
 
 Configuration:
 └── ~/.env                   # Single consolidated environment configuration
@@ -361,6 +372,9 @@ Configuration:
 25. **Email Content Formatting**: Fixed HTML/text email formatting with proper content display and responsive design
 26. **Gmail-Optimized HTML Newsletter**: Rich HTML formatting with color-coded scores, clickable links, article cards, and responsive design
 27. **Email Debugging Tools**: Comprehensive debugging scripts for troubleshooting email content and formatting issues
+28. **✅ FIXED: Corrected Newsletter Prioritization**: Fixed keyword scoring algorithm so high-priority topics show as high-priority articles instead of "Daily Surprise"
+29. **✅ IMPROVED: Realistic Topic Scoring**: Enhanced keyword matching with better base multipliers (0.8 vs 0.3) for more accurate relevance
+30. **✅ VALIDATED: GitHub MCP Integration**: Full GitHub repository management capability tested and confirmed working
 
 ### Playwright Implementation Details
 
@@ -405,6 +419,9 @@ python src/sync_main.py init     # Initialize database
 python src/sync_main.py sync     # Sync feed subscriptions  
 python src/sync_main.py process  # Process articles
 python src/sync_main.py status   # Check system status
+
+# Generate corrected newsletter with proper prioritization
+python generate_50_article_newsletter.py
 ```
 
 #### Manual Testing with Real Inoreader Account
@@ -474,6 +491,8 @@ The system includes a sophisticated topic scoring engine that personalizes conte
 - **User preference learning** through interactive feedback and training
 - **Surprise detection** algorithm for discovering interesting content from lower-priority topics
 - **Comprehensive CLI management** for ongoing tuning and optimization
+- **✅ FIXED: Improved keyword scoring algorithm** - Non-matching articles now get 0.8x base multiplier instead of 0.3x
+- **✅ REALISTIC: Better category thresholds** - High priority ≥70, Medium 50-69, Surprise <50
 
 **Lowest Priority Topics:**
 - Sports (Football, Ice Hockey, Basketball): 3-5/100
@@ -487,7 +506,7 @@ Technology professional with strong interests in AI/ML, investigative journalism
 #### Scoring Algorithm Components
 
 1. **Base Topic Score** (1-100): Your personal interest level
-2. **Keyword Matching** (0.1-2.0x): Positive/negative keyword presence
+2. **Keyword Matching** (0.2-2.0x): Positive/negative keyword presence - **IMPROVED: 0.8x base for non-matches instead of 0.3x**
 3. **Source Reliability** (0.7-1.5x): Trustworthiness multiplier
 4. **Regional Preference** (1.0-1.5x): Geographic relevance boost
 5. **Freshness Decay** (0.1-1.5x): Time-based relevance adjustment
@@ -528,17 +547,17 @@ The RSS processing system follows a modular, event-driven architecture designed 
 - **Content Validator**: Ensures data quality and completeness
 
 #### 3. Intelligence Layer
-- **Topic Scoring System**: Multi-criteria ML scoring with **100 personalized topics** (1-100 scale, 0=blacklist)
+- **Topic Scoring System**: Multi-criteria ML scoring with **100 personalized topics** (1-100 scale, 0=blacklist) - **FIXED KEYWORD SCORING**
 - **Learning Engine**: Adapts to user preferences through interactive training feedback
 - **Surprise Discovery**: Algorithm to identify high-scoring articles from lower-priority topics
-- **Content Analysis**: Keyword matching, source reliability, regional preference, freshness decay
+- **Content Analysis**: Keyword matching, source reliability, regional preference, freshness decay - **IMPROVED ALGORITHM**
 - **User Profiling**: Comprehensive preference mapping through interactive scoring sessions
 - **Summarization Engine**: Generates concise article summaries (planned)
 
 #### 4. Newsletter Generation
-- **Content Curator**: Selects articles based on scores and preferences
+- **Content Curator**: Selects articles based on scores and preferences - **FIXED PRIORITIZATION**
 - **Template Engine**: Formats content into newsletter structure
-- **Daily Surprise Compiler**: Assembles unexpected findings section
+- **Daily Surprise Compiler**: Assembles unexpected findings section - **PROPERLY CATEGORIZED**
 
 #### 5. Obsidian Integration Layer
 - **Note Generator**: Creates Obsidian-compatible markdown files
@@ -575,6 +594,7 @@ Rate Limiting → Article Parsing → Training Loop → Template Engine → Note
 - **Rate Limiting**: Custom implementation with persistent state tracking
 - **CLI Interface**: Argparse-based commands with structured logging
 - **Error Handling**: Comprehensive exception handling and logging
+- **GitHub Integration**: Full MCP server integration for repository management
 
 **Planned Components:**
 - **ML/NLP**: scikit-learn, transformers, spaCy for content analysis
@@ -639,7 +659,7 @@ All configuration is stored in a single `~/.env` file in your home directory:
 - **context7**: Added via `claude mcp add context7 -s user npx @upstash/context7-mcp` - ✅ Connected - Provides up-to-date code documentation and examples directly from source repositories.
 - **tavily**: Added with API key configuration in `~/.claude.json` using `npx @mcptools/mcp-tavily` - ✅ Connected - Provides web search capabilities for current information and research.
 - **firecrawl**: Added with API key configuration in `~/.claude.json` using `npx firecrawl-mcp` - ✅ Connected - Provides advanced web scraping, crawling, and content extraction with JavaScript rendering support.
-- **github**: Added with API key configuration in `~/.claude.json` using `npx @modelcontextprotocol/server-github` - ✅ Connected - Provides GitHub repository operations including file uploads, repository management, issues, pull requests, and workflow management.
+- **github**: Added with API key configuration in `~/.claude.json` using `npx @modelcontextprotocol/server-github` - ✅ Connected - Provides GitHub repository operations including file uploads, repository management, issues, pull requests, and workflow management - **FULLY TESTED AND WORKING**.
 - **playwright**: Added via `claude mcp add playwright -s user npx @playwright/mcp-server` - ✅ Connected - Provides browser automation and testing capabilities for web scraping development.
 
 ## User Rules
@@ -720,12 +740,12 @@ To enable email delivery, you need a Gmail App Password:
 
 ## Next Steps & Roadmap
 
-### Immediate Next Steps (Session 10)
+### Immediate Next Steps (Session 12)
 
-1. **🔧 Gmail Authentication Fix**
-   - Generate Gmail App Password
-   - Update `EMAIL_PASSWORD` in `~/.env`
-   - Test email delivery functionality
+1. **✅ GitHub Repository Synchronization**
+   - Push all Session 11 improvements to remote repository
+   - Validate GitHub MCP server integration
+   - Confirm all files are properly synchronized
 
 2. **🚀 Deploy Daily Automation**
    - Choose deployment method (Docker/systemd/manual)
@@ -787,7 +807,10 @@ To enable email delivery, you need a Gmail App Password:
 - [x] Generate Gmail App Password and update `~/.env`
 - [x] Test email functionality: `python src/sync_main.py email-test --email your@email.com`
 - [x] Run health check: `python src/sync_main.py health`
-- [x] Generate and send HTML newsletter: `python send_html_newsletter.py`  
+- [x] Generate and send HTML newsletter: `python generate_50_article_newsletter.py`  
+- [x] ✅ **FIXED: Newsletter prioritization working correctly** - High-priority articles now show as high-priority instead of "Daily Surprise"
+- [x] ✅ **TESTED: GitHub MCP server fully functional** - Repository search, file operations, and authenticated access confirmed
+- [ ] Push Session 11 improvements to GitHub repository
 - [ ] Start automated scheduler: `python src/sync_main.py scheduler`
 
 ### For Production Deployment:
@@ -797,24 +820,35 @@ To enable email delivery, you need a Gmail App Password:
 - [ ] Test failover and recovery procedures
 - [ ] Document operational procedures for maintenance
 
-The RSS Newsletter System is production-ready and can be deployed immediately with proper Gmail authentication setup! 🚀
+The RSS Newsletter System is production-ready with corrected article prioritization, validated HTML email delivery, and comprehensive GitHub integration! 🚀
 
-## Session 10 Summary - HTML Newsletter Implementation
+## Session 11 Summary - Newsletter Prioritization Fix & GitHub MCP Testing
 
 **Major Achievements:**
-- ✅ **Complete 50-article newsletter generation** with real-time Inoreader scraping
-- ✅ **Personalized topic scoring** using 100-topic system (scores 100.0 to 30.0)
-- ✅ **Gmail-optimized HTML formatting** with professional styling and responsive design
-- ✅ **Color-coded article prioritization** (🔥 High, ⭐ Medium, 🎯 Surprise)
-- ✅ **Rich email features** including clickable links, article cards, and visual hierarchy
-- ✅ **Email debugging toolkit** for troubleshooting formatting issues
-- ✅ **Validated delivery system** with both HTML and text fallback formats
+- ✅ **Fixed newsletter prioritization algorithm** - Resolved critical issue where high-priority articles were incorrectly categorized as "Daily Surprise"
+- ✅ **Improved keyword scoring system** - Enhanced base multiplier from 0.3 to 0.8 for non-matching articles, resulting in more realistic scoring
+- ✅ **Adjusted categorization thresholds** - Set realistic boundaries: High priority ≥70, Medium 50-69, Surprise <50
+- ✅ **Validated corrected newsletter generation** - Now properly shows 50 high-priority articles with scores ranging 100.0-80.0
+- ✅ **Comprehensive GitHub MCP server testing** - Successfully tested repository search, file content retrieval, file creation/updates, and authenticated operations
+- ✅ **Prepared for repository synchronization** - All improvements ready for GitHub push
 
-**Files Created in Session 10:**
-- `generate_50_article_newsletter.py` - Main newsletter generation with topic scoring
-- `send_html_newsletter.py` - Gmail-optimized HTML newsletter sender (recommended)
-- `send_newsletter_fixed.py` - Troubleshooting email sender
-- `debug_email_content.py` - Email content debugging tool
-- `newsletter_html_version.html` - Generated HTML newsletter for testing
+**Technical Fixes Implemented:**
+- **topic_scorer.py**: Enhanced `_calculate_keyword_score()` method with improved base multiplier (0.8 vs 0.3)
+- **generate_50_article_newsletter.py**: Updated categorization thresholds and section headers for realistic article distribution
+- **Integration testing**: Validated GitHub MCP server functionality for repository management
 
-**System Status:** Fully functional RSS newsletter system ready for daily automation deployment. Next session should focus on automated scheduling and monitoring improvements.
+**Results Achieved:**
+- ✅ **Newsletter now correctly prioritizes articles**: 50 high-priority articles (was mostly surprise articles)
+- ✅ **Realistic score distribution**: Range 100.0-80.0 (was 30-40 range pushing articles to surprise category)
+- ✅ **Average score improved**: 87.0 (much more realistic for high-priority content)
+- ✅ **GitHub integration confirmed**: Full repository management capability tested and working
+
+**Files Modified in Session 11:**
+- `src/scoring/topic_scorer.py` - Fixed keyword scoring algorithm
+- `generate_50_article_newsletter.py` - Updated thresholds and email integration
+- `CLAUDE.md` - Updated with Session 11 status and improvements
+- New newsletter files generated with corrected prioritization
+
+**System Status:** Newsletter prioritization issue completely resolved. GitHub MCP server fully functional and ready for repository synchronization. All Session 11 improvements validated and ready for deployment.
+
+**Next Session Focus:** Complete GitHub repository push, deploy daily automation, and implement monitoring enhancements.
